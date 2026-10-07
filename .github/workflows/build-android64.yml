@@ -17,6 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Ninja
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+          ninja --version
+
       - name: Build Geode mod
         id: build
         uses: geode-sdk/build-geode-mod@main
@@ -34,3 +40,4 @@ jobs:
         with:
           name: Ultimate-GD-Toolkit-Android64-v0.2.0
           path: ${{ steps.build.outputs.build-output }}/*.geode
+          
