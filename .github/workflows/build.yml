@@ -1,0 +1,22 @@
+name: Build Android
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: geode-sdk/build-geode-mod@main
+        id: build
+        with:
+          sdk: latest
+          target: Android64   # use Android32 for a 32-bit phone
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gd-toolkit-android
+          path: ${{ steps.build.outputs.build-output }}
