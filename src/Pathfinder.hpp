@@ -1,32 +1,56 @@
 #pragma once
-#include "SmMacro.hpp"
+#include <Geode/Geode.hpp>
+#include <string>
+#include <vector>
+#include <cstdint>
 
-namespace sm::pathfinder {
+namespace sm {
 
-struct SearchConfig {
-    uint32_t maxDepth = 120;
-    uint32_t maxAttempts = 100000;
-    uint32_t branchLimit = 8;
-    bool useCheckpoints = true;
-    bool verifyBeforeExport = true;
+enum class EventType : uint8_t {
+    Press = 0,
+    Release = 1
 };
 
-class SearchEngine {
+struct InputEvent {
+    uint64_t frame = 0;
+    int button = 0;
+    EventType type = EventType::Press;
+};
+
+struct Route {
+    std::vector<InputEvent> events;
+    uint64_t frames = 0;
+};
+
+enum class ExportFormat {
+    SM,
+    GDR,
+    GDR2,
+    ECHO
+};
+
+class RouteExporter {
 public:
-    explicit SearchEngine(SearchConfig config = {});
-    void reset();
-    void begin();
-    void cancel();
+    static bool exportRoute(Route const& route, ExportFormat format, std::string const& path);
+};
+
+class Pathfinder {
+public:
+    void start();
+    void stop();
+    void retry();
+    void verify();
     bool running() const;
     uint64_t attempts() const;
-    uint64_t expandedStates() const;
-    SearchConfig const& config() const;
+    uint32_t searchDepth() const;
+    void setSearchDepth(uint32_t depth);
 
 private:
-    SearchConfig m_config;
     bool m_running = false;
     uint64_t m_attempts = 0;
-    uint64_t m_expandedStates = 0;
+    uint32_t m_searchDepth = 120;
 };
 
-} // namespace sm::pathfinder
+void openSMMenu();
+
+} // namespace sm
