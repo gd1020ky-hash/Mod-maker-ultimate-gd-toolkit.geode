@@ -1,4 +1,4 @@
-# Ultimate GD Toolkit — Pathfinder v0.2.0 — Android64 Compatibility Build
+# Ultimate GD Toolkit — Pathfinder v0.2.0 — My Biggest Creation
 
 Target:
 - Geometry Dash Android 2.2081
