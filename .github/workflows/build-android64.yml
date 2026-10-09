@@ -28,9 +28,6 @@ steps:
       path: ./
       build-config: Release
       use-lto: false
-      # Leave android-ndk-version unset.
-      # The official action selects the runner's NDK
-      # and installs Ninja automatically.
 
   - name: Upload Geode artifact
     if: success()
