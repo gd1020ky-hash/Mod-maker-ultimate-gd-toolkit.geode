@@ -8,7 +8,7 @@ branches:
 jobs:
 build:
 runs-on: ubuntu-24.04
-steps: - uses:
+steps:-uses:
 - uses: actions/checkout@v4
 
   - uses: geode-sdk/build-geode-mod@main
