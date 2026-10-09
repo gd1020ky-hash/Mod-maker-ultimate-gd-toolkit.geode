@@ -1,18 +1,24 @@
-name: Build Ultimate GD Toolkit
+name: Build Ultimate GD Toolkit Android64
+
 'on':
 workflow_dispatch:
 push:
-branches:
-- main
+branches: [ main ]
+
+permissions:
+contents: read
 
 jobs:
 build:
-runs-on: ubuntu-24.04
-step:
-- name: Checkout
-uses: actions/checkout@v4
+name: Build Android64
+runs-on: ubuntu-latest
+
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
 
   - name: Build Geode mod
+    id: build
     uses: geode-sdk/build-geode-mod@main
     with:
       target: Android64
@@ -21,3 +27,10 @@ uses: actions/checkout@v4
       path: ./
       build-config: Release
       use-lto: false
+
+  - name: Upload Geode
+    uses: actions/upload-artifact@v4
+    with:
+      name: Ultimate-GD-Toolkit-Android64-v0.2.0
+      path: ${{ steps.build.outputs.build-output }}
+      if-no-files-found: error
